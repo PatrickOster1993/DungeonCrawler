@@ -16,6 +16,8 @@ import json
 # Spieler-Model verwenden!
 # from "ordner.dateiname_ohne_endung import klassenname"
 from models.player import Player
+# Gegner
+from models.enemy import Enemy
 # Wall-Modell verwenden!
 from models.wall import Wall
 
@@ -31,6 +33,7 @@ WIDTH = 800
 HEIGHT = 600
 # Fensterfarbe
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
 
 # Fenster erstellen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -60,7 +63,19 @@ for wall_data in dungeon_data["walls"]:
 
 
 # SPIELER:
-player = Player()
+player = Player(
+    x=100,
+    y=100,
+    width=50,
+    height=50,
+    color=GREEN,
+    speed=5
+)
+
+# GEGNER:
+enemy_1 = Enemy(500, 100)
+enemy_2 = Enemy(600, 300)
+
 
 # GAME LOOP VARIABLE (running)
 running = True # wenn True, dann läuft Spiel!
@@ -110,6 +125,9 @@ while running:
         wall.draw(screen)
 
     player.draw(screen)
+    enemy_1.draw(screen)
+    enemy_2.draw(screen)
+
 
     pygame.display.update() # ohne diese Zeile würde nichts erscheinen!
 
