@@ -115,7 +115,7 @@ while running:
     old_x = player.rect.x
     old_y = player.rect.y
 
-    player.move(keys)
+    #player.move(keys)
 
     CollisionSystem.resolve_entity_walls(
         player,
@@ -130,7 +130,7 @@ while running:
         if hasattr(entity, "update"):
             old_x_ent = entity.rect.x
             old_y_ent = entity.rect.y
-            entity.update()
+            entity.update(keys)
             CollisionSystem.resolve_entity_walls(
                 entity,
                 walls,

@@ -11,5 +11,5 @@ class Enemy(Entity):
             speed
         )
     
-    def update(self):
+    def update(self, context):
         self.rect.x -= self._speed
