@@ -1,4 +1,5 @@
 import pygame
+from constants.colors import Colors
 
 class Wall:
 
@@ -15,6 +16,6 @@ class Wall:
 
         pygame.draw.rect(
             screen,
-            (255, 255, 255),
+            Colors.WHITE.value,
             self.rect
         )

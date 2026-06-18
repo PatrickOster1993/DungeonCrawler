@@ -1,12 +1,13 @@
 from models.entity import Entity
+from constants.game_settings import ENEMY_SIZE
 
 class Enemy(Entity):
     def __init__(self, x, y, color, speed):
         super().__init__(
             x,
             y,
-            50,
-            50,
+            ENEMY_SIZE,
+            ENEMY_SIZE,
             color,
             speed
         )

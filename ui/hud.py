@@ -1,5 +1,6 @@
 import pygame
 from observers.observer import Observer
+from constants.colors import Colors
 
 class HUD(Observer):
     def __init__(self):
@@ -22,7 +23,7 @@ class HUD(Observer):
         text = self.__font.render(
             f"Enemy HP: {self.__enemy_hp}",
             True,
-            (255, 255, 255)
+            Colors.WHITE.value
         )
 
         screen.blit(

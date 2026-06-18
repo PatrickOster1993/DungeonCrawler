@@ -24,6 +24,10 @@ from models.wall import Wall
 from systems.collision_system import CollisionSystem
 # Display
 from ui.hud import HUD
+# Farb-Enums
+from constants.colors import Colors
+# Konstanten für Game Setting:
+from constants.game_settings import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_SIZE, FPS
 
 # pygame zunächst starten!
 # also intern wichtige Systeme vorbereiten (Grafik, Tastatur, Sound, ..)
@@ -31,17 +35,9 @@ pygame.init()
 
 # EINSTELLUNGEN FÜR SPIEL
 
-# Fensterbreite
-WIDTH = 800
-# Fensterhöhe
-HEIGHT = 600
-# Fensterfarbe
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
 
 # Fenster erstellen
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Fenstertitel setzen ("Dungeon Crawler")
 pygame.display.set_caption("Dungeon Crawler")
@@ -71,9 +67,9 @@ for wall_data in dungeon_data["walls"]:
 player = Player(
     x=100,
     y=100,
-    width=50,
-    height=50,
-    color=GREEN,
+    width=PLAYER_SIZE,
+    height=PLAYER_SIZE,
+    color=Colors.GREEN.value,
     speed=5
 )
 
@@ -88,7 +84,7 @@ for enemy_data in dungeon_data["enemies"]:
     enemy = Enemy(
         x=enemy_data["x"],
         y=enemy_data["y"],
-        color=RED,
+        color=Colors.RED.value,
         speed=2
     )
     entities.append(enemy)
@@ -157,7 +153,7 @@ while running:
 
     # SPIEL SAUBER ZEICHNEN (HINTERGRUND)
 
-    screen.fill(BLACK) # RGB-Farben!
+    screen.fill(Colors.BLACK.value) # RGB-Farben!
 
     # zeichnet uns ein Rechteck (Quadrat)
 
@@ -178,7 +174,7 @@ while running:
     # FPS BEGRENZEN
     # max. 60 Bilder pro Sekunde, damit Spiel flüssig und stabil läuft
     # UND: v. a. auf verschiedenen PCS ähnlich!
-    clock.tick(60)
+    clock.tick(FPS)
 
 # SPIEL SAUBER BEENDEN (in 2 Schritten)
 
