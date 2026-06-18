@@ -36,6 +36,7 @@ HEIGHT = 600
 # Fensterfarbe
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 
 # Fenster erstellen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -75,15 +76,18 @@ player = Player(
 )
 
 # GEGNER:
-enemy_1 = Enemy(500, 100)
-enemy_2 = Enemy(600, 300)
-
 entities = [
-    player,
-    enemy_1,
-    enemy_2
+    player
 ]
 
+for enemy_data in dungeon_data["enemies"]:
+    enemy = Enemy(
+        x=enemy_data["x"],
+        y=enemy_data["y"],
+        color=RED,
+        speed=2
+    )
+    entities.append(enemy)
 
 # GAME LOOP VARIABLE (running)
 running = True # wenn True, dann läuft Spiel!

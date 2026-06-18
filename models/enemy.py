@@ -1,14 +1,14 @@
 from models.entity import Entity
 
 class Enemy(Entity):
-    def __init__(self, x, y):
+    def __init__(self, x, y, color, speed):
         super().__init__(
             x,
             y,
             50,
             50,
-            (255,0,0),
-            2
+            color,
+            speed
         )
     
     def update(self):
