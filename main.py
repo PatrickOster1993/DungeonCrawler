@@ -76,6 +76,12 @@ player = Player(
 enemy_1 = Enemy(500, 100)
 enemy_2 = Enemy(600, 300)
 
+entities = [
+    player,
+    enemy_1,
+    enemy_2
+]
+
 
 # GAME LOOP VARIABLE (running)
 running = True # wenn True, dann läuft Spiel!
@@ -105,6 +111,12 @@ while running:
 
     player.move(keys)
 
+    # enemy_1.update()
+    # enemy_2.update()
+    for entity in entities:
+        if hasattr(entity, "update"):
+            entity.update()
+
     for wall in walls:
         if player.rect.colliderect(wall.rect):
             player.rect.x = old_x
@@ -124,9 +136,11 @@ while running:
     for wall in walls:
         wall.draw(screen)
 
-    player.draw(screen)
-    enemy_1.draw(screen)
-    enemy_2.draw(screen)
+    # player.draw(screen)
+    # enemy_1.draw(screen)
+    # enemy_2.draw(screen)
+    for entity in entities:
+        entity.draw(screen)
 
 
     pygame.display.update() # ohne diese Zeile würde nichts erscheinen!
