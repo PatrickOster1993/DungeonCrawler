@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class Entity(ABC):
 
-    def __init__(self, x, y, width, height, color, speed):
+    def __init__(self, x, y, width, height, color):
 
         # Position
         self._rect = pygame.Rect(
@@ -12,9 +12,6 @@ class Entity(ABC):
             width,
             height
         )
-        
-        # Geschwindigkeit
-        self._speed = speed
 
         # Farbe
         self.__color = color

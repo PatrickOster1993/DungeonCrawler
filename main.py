@@ -70,14 +70,15 @@ player = Player(
     width=PLAYER_SIZE,
     height=PLAYER_SIZE,
     color=Colors.GREEN.value,
-    speed=5
+    speed=5,
+    hp=100
 )
 player.load_sprite(PLAYER_PATH)
 
 hud = HUD()
 
 # GEGNER:
-entities = [
+creatures = [
     player
 ]
 
@@ -89,7 +90,7 @@ for enemy_data in dungeon_data["enemies"]:
         speed=2
     )
     enemy.load_sprite(ENEMY_PATH)
-    entities.append(enemy)
+    creatures.append(enemy)
     enemy.add_observer(hud)
 
 # GAME LOOP VARIABLE (running)
@@ -129,28 +130,29 @@ while running:
 
     # enemy_1.update()
     # enemy_2.update()
-    for entity in entities:
-        if hasattr(entity, "update"):
-            old_x_ent = entity.rect.x
-            old_y_ent = entity.rect.y
-            entity.update(keys)
+    for creature in creatures:
+        if hasattr(creature, "update"):
+            old_x_ent = creature.rect.x
+            old_y_ent = creature.rect.y
+            creature.update(keys)
             CollisionSystem.resolve_entity_walls(
-                entity,
+                creature,
                 walls,
                 old_x_ent,
                 old_y_ent
             )
 
-    for enemy in entities:
+    for creature in creatures:
         if isinstance(enemy, Enemy):
             if player.rect.colliderect(enemy.rect):
                 enemy.take_damage(2)
                 if enemy.is_dead():
-                    entities.remove(enemy)
+                    creatures.remove(enemy)
 
-    player.stay_in_bounds(
-        screen.get_rect()
-    )
+    for creature in creatures:
+        creature.stay_in_bounds(
+            screen.get_rect()
+        )
 
 
     # SPIEL SAUBER ZEICHNEN (HINTERGRUND)
@@ -167,8 +169,8 @@ while running:
     # enemy_2.draw(screen)
     hud.draw(screen)
 
-    for entity in entities:
-        entity.draw(screen)
+    for creature in creatures:
+        creature.draw(screen)
 
 
     pygame.display.update() # ohne diese Zeile würde nichts erscheinen!
