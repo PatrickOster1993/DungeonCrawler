@@ -20,6 +20,8 @@ from models.player import Player
 from models.enemy import Enemy
 # Wall-Modell verwenden!
 from models.wall import Wall
+# Kollisions-System verwenden!
+from systems.collision_system import CollisionSystem
 
 # pygame zunächst starten!
 # also intern wichtige Systeme vorbereiten (Grafik, Tastatur, Sound, ..)
@@ -111,16 +113,26 @@ while running:
 
     player.move(keys)
 
+    CollisionSystem.resolve_entity_walls(
+        player,
+        walls,
+        old_x,
+        old_y
+    )
+
     # enemy_1.update()
     # enemy_2.update()
     for entity in entities:
         if hasattr(entity, "update"):
+            old_x_ent = entity.rect.x
+            old_y_ent = entity.rect.y
             entity.update()
-
-    for wall in walls:
-        if player.rect.colliderect(wall.rect):
-            player.rect.x = old_x
-            player.rect.y = old_y
+            CollisionSystem.resolve_entity_walls(
+                entity,
+                walls,
+                old_x_ent,
+                old_y_ent
+            )
 
     player.stay_in_bounds(
         screen.get_rect()
