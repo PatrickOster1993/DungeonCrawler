@@ -27,7 +27,7 @@ from ui.hud import HUD
 # Farb-Enums
 from constants.colors import Colors
 # Konstanten für Game Setting:
-from constants.game_settings import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_SIZE, FPS
+from constants.game_settings import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_SIZE, FPS, ENEMY_PATH, PLAYER_PATH
 
 # pygame zunächst starten!
 # also intern wichtige Systeme vorbereiten (Grafik, Tastatur, Sound, ..)
@@ -72,6 +72,7 @@ player = Player(
     color=Colors.GREEN.value,
     speed=5
 )
+player.load_sprite(PLAYER_PATH)
 
 hud = HUD()
 
@@ -87,6 +88,7 @@ for enemy_data in dungeon_data["enemies"]:
         color=Colors.RED.value,
         speed=2
     )
+    enemy.load_sprite(ENEMY_PATH)
     entities.append(enemy)
     enemy.add_observer(hud)
 
@@ -177,7 +179,6 @@ while running:
     clock.tick(FPS)
 
 # SPIEL SAUBER BEENDEN (in 2 Schritten)
-
 # 1. pygame herunterfahren
 pygame.quit()
 
