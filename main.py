@@ -22,6 +22,8 @@ from models.enemy import Enemy
 from models.wall import Wall
 # Kollisions-System verwenden!
 from systems.collision_system import CollisionSystem
+# Display
+from ui.hud import HUD
 
 # pygame zunächst starten!
 # also intern wichtige Systeme vorbereiten (Grafik, Tastatur, Sound, ..)
@@ -75,6 +77,8 @@ player = Player(
     speed=5
 )
 
+hud = HUD()
+
 # GEGNER:
 entities = [
     player
@@ -88,6 +92,7 @@ for enemy_data in dungeon_data["enemies"]:
         speed=2
     )
     entities.append(enemy)
+    enemy.add_observer(hud)
 
 # GAME LOOP VARIABLE (running)
 running = True # wenn True, dann läuft Spiel!
@@ -138,6 +143,13 @@ while running:
                 old_y_ent
             )
 
+    for enemy in entities:
+        if isinstance(enemy, Enemy):
+            if player.rect.colliderect(enemy.rect):
+                enemy.take_damage(2)
+                if enemy.is_dead():
+                    entities.remove(enemy)
+
     player.stay_in_bounds(
         screen.get_rect()
     )
@@ -155,6 +167,8 @@ while running:
     # player.draw(screen)
     # enemy_1.draw(screen)
     # enemy_2.draw(screen)
+    hud.draw(screen)
+
     for entity in entities:
         entity.draw(screen)
 
