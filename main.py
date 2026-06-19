@@ -87,7 +87,7 @@ hud = HUD()
 
 # GEGNER:
 creatures_raw = provider.load_creatures()
-creatures = []
+creatures = [player]
 
 for creature in creatures_raw:
     enemy = Enemy(

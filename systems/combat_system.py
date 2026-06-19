@@ -20,4 +20,4 @@ class CombatSystem:
 
     @staticmethod
     def calculate_damage(attacker, defender):
-        return 10
+        return 2
