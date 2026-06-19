@@ -85,6 +85,7 @@ player.load_sprite(PLAYER_PATH)
 
 hud = HUD()
 
+provider = DummyProvider()
 # GEGNER:
 creatures_raw = provider.load_creatures()
 creatures = [player]
