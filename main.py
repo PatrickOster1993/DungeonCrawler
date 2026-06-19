@@ -142,12 +142,17 @@ while running:
                 old_y_ent
             )
 
+    dead_creatures = []
+
     for creature in creatures:
-        if isinstance(enemy, Enemy):
-            if player.rect.colliderect(enemy.rect):
-                enemy.take_damage(2)
-                if enemy.is_dead():
-                    creatures.remove(enemy)
+        if isinstance(creature, Enemy):
+            if player.rect.colliderect(creature.rect):
+                creature.take_damage(2)
+                if creature.is_dead():
+                    dead_creatures.append(creature)
+
+    for dead_creature in dead_creatures:
+        creatures.remove(dead_creature)
 
     for creature in creatures:
         creature.stay_in_bounds(

@@ -23,7 +23,7 @@ class Creature(Entity):
     
     def take_damage(self, damage):
         self.__hp -= damage
-        self.__notifiy_observers()
+        self.__notify_observers()
 
     def is_dead(self):
         return self.__hp <= 0
@@ -31,6 +31,6 @@ class Creature(Entity):
     def add_observer(self, observer):
         self.__observers.append(observer)
 
-    def __notifiy_observers(self):
+    def __notify_observers(self):
         for observer in self.__observers:
             observer.update(self.__hp)
