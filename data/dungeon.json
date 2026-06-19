@@ -1,26 +1,16 @@
 {
     "walls": [
         {
-            "x": 300,
-            "y": 200,
             "width": 200,
             "height": 40
-        },
-        {
-            "x": 200,
-            "y": 300,
-            "width": 50,
-            "height": 110
         }
     ],
     "enemies": [
         {
-            "x": 500,
-            "y": 100
-        },
-        {
-            "x": 600,
-            "y": 300
+            "name": "Dummy Goblin",
+            "hp": 50,
+            "damage": 5,
+            "sprite": "assets/enemy.png"
         }
     ]
 }

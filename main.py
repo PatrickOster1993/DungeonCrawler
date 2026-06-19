@@ -22,12 +22,17 @@ from models.enemy import Enemy
 from models.wall import Wall
 # Kollisions-System verwenden!
 from systems.collision_system import CollisionSystem
+# Combat-System verwenden!
+from systems.combat_system import CombatSystem
 # Display
 from ui.hud import HUD
 # Farb-Enums
 from constants.colors import Colors
 # Konstanten für Game Setting:
-from constants.game_settings import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_SIZE, FPS, ENEMY_PATH, PLAYER_PATH
+from constants.game_settings import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_SIZE, FPS, PLAYER_PATH
+
+# Provider einbetten
+from providers.dummy_provider import DummyProvider
 
 # pygame zunächst starten!
 # also intern wichtige Systeme vorbereiten (Grafik, Tastatur, Sound, ..)
@@ -46,6 +51,9 @@ pygame.display.set_caption("Dungeon Crawler")
 # Clock hilft uns, die FPS zu kontrollieren!
 clock = pygame.time.Clock()
 
+provider = DummyProvider()
+
+
 # WÄNDE:
 # Datei "dungeon.json" öffnen und in ein python dict umwandeln
 with open("data/dungeon.json", "r") as file:
@@ -54,8 +62,8 @@ with open("data/dungeon.json", "r") as file:
 walls = []
 for wall_data in dungeon_data["walls"]:
     wall = Wall(
-        x=wall_data["x"],
-        y=wall_data["y"],
+        x=50,
+        y=200,
         width=wall_data["width"],
         height=wall_data["height"],
     )
@@ -78,18 +86,17 @@ player.load_sprite(PLAYER_PATH)
 hud = HUD()
 
 # GEGNER:
-creatures = [
-    player
-]
+creatures_raw = provider.load_creatures()
+creatures = []
 
-for enemy_data in dungeon_data["enemies"]:
+for creature in creatures_raw:
     enemy = Enemy(
-        x=enemy_data["x"],
-        y=enemy_data["y"],
+        x=300,
+        y=300,
         color=Colors.RED.value,
-        speed=2
+        speed=5,
+        creature_data=creature
     )
-    enemy.load_sprite(ENEMY_PATH)
     creatures.append(enemy)
     enemy.add_observer(hud)
 
@@ -142,17 +149,21 @@ while running:
                 old_y_ent
             )
 
-    dead_creatures = []
+    # dead_creatures = []
 
-    for creature in creatures:
-        if isinstance(creature, Enemy):
-            if player.rect.colliderect(creature.rect):
-                creature.take_damage(2)
-                if creature.is_dead():
-                    dead_creatures.append(creature)
+    # for creature in creatures:
+    #     if isinstance(creature, Enemy):
+    #         if player.rect.colliderect(creature.rect):
+    #             creature.take_damage(2)
+    #             if creature.is_dead():
+    #                 dead_creatures.append(creature)
 
-    for dead_creature in dead_creatures:
-        creatures.remove(dead_creature)
+    # for dead_creature in dead_creatures:
+    #     creatures.remove(dead_creature)
+
+    CombatSystem.handle_player_enemy_collisions(
+        player, creatures
+    )
 
     for creature in creatures:
         creature.stay_in_bounds(

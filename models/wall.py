@@ -1,21 +1,25 @@
 import pygame
 from constants.colors import Colors
+from models.entity import Entity
 
-class Wall:
 
-    def __init__(self, x, y, width, height):
+class Wall(Entity):
 
-        self.rect = pygame.Rect(
-            x,
-            y,
-            width,
-            height
+    def __init__(
+        self,
+        x,
+        y,
+        width,
+        height
+    ):
+
+        super().__init__(
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+            color=Colors.WHITE.value
         )
 
-    def draw(self, screen):
-
-        pygame.draw.rect(
-            screen,
-            Colors.WHITE.value,
-            self.rect
-        )
+    def update(self, context):
+        pass
